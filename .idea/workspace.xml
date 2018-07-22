@@ -36,7 +36,7 @@
       <file leaf-file-name="CRFLearner.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CRFLearner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2943">
+            <state relative-caret-position="454">
               <caret line="194" column="9" selection-start-line="194" selection-start-column="9" selection-end-line="194" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -200,7 +200,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="189" y="16" width="1171" height="800" extended-state="0" />
+    <frame x="189" y="16" width="1171" height="800" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -313,7 +313,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CRFLearner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2943">
+        <state relative-caret-position="454">
           <caret line="194" column="9" selection-start-line="194" selection-start-column="9" selection-end-line="194" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
