@@ -6,12 +6,11 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// import BaseClassifier;
 import LBFGS.LBFGS;
 import LBFGS.LBFGS.ExceptionWithIflag;
 import utils.Utils;
 
-//public class ALogisticRegression extends LogisticRegression {
+
 public class ALogisticRegression {
 
 	int m_classNo;

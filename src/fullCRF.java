@@ -195,37 +195,8 @@ public class fullCRF {
                 //System.out.println("acc on itr" +j+" "+getAcc(learner, test));
             }
             System.out.println(acc);
-            
-            // for debugging, works both ways k-1/1 fold as training  
-            /*
-            al_idx = new ArrayList<Integer> ();
-            al_y = new ArrayList<Integer> ();
-            trainX = new ArrayList<HashMap<Integer, int[]>> ();
-            train = debug;
-            //ArrayList<Integer> tmp = train;
-            //train = test;
-            //test = tmp;
-            len = train.size(); 
-            for (int j=0; j<len; j++) {
-                int id = rn.nextInt(train.size());
-                int idx = train.get(id);
-                train.remove(id);
-                //int idx = train.get(j);
-                al_idx.add(idx);
-                al_y.add(label[idx]);
-                trainX.add(featureTable.get(idx));
-            } 
-            trainY = new int[al_y.size()];
-            for (int k=0; k<al_y.size(); k++) {
-                trainY[k]= al_y.get(k);
-            }
-            learner.train(trainX, trainY);
-            double debug_score = getAcc(learner, test);
-            acc_ += debug_score;
-            System.out.println("full fold acc-"+debug_score);
-            */
         }
-        //System.out.println("full fold ave testing acc: "+ acc_/fold);
+        //System.out.println("testing acc: "+ acc_/fold);
     }
     
     public static int getQueryID(ALogisticRegression learner, ArrayList<Integer> trainID) {
@@ -258,7 +229,7 @@ public class fullCRF {
     }
     
     public static void main(String[] args) throws IOException, ParseException {
-        String inputFile = "./fn_rice.txt";
+        String inputFile = "./data/....txt";
         //loadData(inputFile);
         
         //ALogisticRegression alr = new ALogisticRegression(numClass, numFeature, 1.0); 
@@ -266,46 +237,32 @@ public class fullCRF {
         //crossValidation(alr, 10);
         
         FactorGraph mdl = new FactorGraph ();
-      Variable[] vars = new Variable [] {
+        Variable[] vars = new Variable [] {
               new Variable (2),
               new Variable (2),
               new Variable (2),
-      };
+        };
 
-      /* Create an edge potential looking like
+        /* Create an edge potential looking like
            VARS[0]   VARS[1]    VALUE
               0         0        0.6
               0         1        1.3
               1         0        0.3
               1         1        2.3
-       */
-      double[] arr = new double[] { 0.6, 1.3, 0.3, 2.3, };
-      mdl.addFactor (vars[0], vars[1], arr);
-      arr = new double[] { 1.6, 0.3, 1.3, 1.6, };
-      mdl.addFactor (vars[1], vars[2], arr);
-      arr = new double[] { 0.6, 1.3};
-      mdl.addFactor (new TableFactor(vars[0], arr));
-      mdl.dump();
+        */
+        double[] arr = new double[] { 0.6, 1.3, 0.3, 2.3, };
+        mdl.addFactor (vars[0], vars[1], arr);
+        arr = new double[] { 1.6, 0.3, 1.3, 1.6, };
+        mdl.addFactor (vars[1], vars[2], arr);
+        arr = new double[] { 0.6, 1.3};
+        mdl.addFactor (new TableFactor(vars[0], arr));
+        mdl.dump();
 
-      Inferencer inf = new LoopyBP();
-      inf.computeMarginals(mdl);
-       /* 
-      Factor ptl = inf.lookupMarginal (mdl.getFactor(0));
-      for (AssignmentIterator it = ptl.assignmentIterator (); it.hasNext (); it.advance()) {
-          int outcome = it.indexOfCurrentAssn ();
-          System.out.println (outcome+"   "+ptl.value(it));
-      }
-*/
+        Inferencer inf = new LoopyBP();
+        inf.computeMarginals(mdl);
+
         double p = inf.lookupLogJoint(new Assignment(new Variable[] {vars[0],vars[1], vars[2]}, new int[] {0,0,0}));
         System.out.println(p);
-
-        //loadNodeFeture();
-        //createNodeFactor();
-
-        //loadEdgeFeture();
-        //createEdgeFactor();
-
-        //trainCRF();
 
     }
 }

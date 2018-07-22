@@ -86,11 +86,11 @@ public class CRFLearner {
         Factor factor, ptl;
         int feaID;
 		for(int index=0; index<factorList.size(); index++)
-		{				
+		{
 			factor = factorList.get(index);
 			ptl = m_infer.lookupMarginal(factor.varSet());
 			//feaID = m_featureMap.get(featureType.get(index)).intValue();
-		
+
 			int idx_class = 0;
 			AssignmentIterator assnIt = ptl.assignmentIterator ();
 			while (assnIt.hasNext ()) {
@@ -104,7 +104,7 @@ public class CRFLearner {
             offset = i * (m_featureSize + 1);
             prob[i] = Utils.dotProduct(m_beta, factorList.get(i), offset);
         }
-		
+
 		double logSum = Utils.logSumOfExponentials(prob);
 		for(int i = 0; i < m_classNo; i++)
             prob[i] = Math.exp(prob[i] - logSum);
