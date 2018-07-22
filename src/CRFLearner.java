@@ -2,12 +2,8 @@ import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
-// import BaseClassifier;
 import LBFGS.LBFGS;
 import LBFGS.LBFGS.ExceptionWithIflag;
 import utils.Utils;
@@ -26,6 +22,9 @@ public class CRFLearner {
 	double[] m_g, m_diag;
 	double[] m_cache;
 	double m_lambda;
+	List<Factor> factorList;
+	List<Integer> featureType;
+    TreeMap<Integer, Integer> m_featureMap;
 	Inferencer m_infer;
 
 	public CRFLearner(int classNo, int nodeFeature, int edgeFeature, double lambda, int featureSize){
@@ -81,14 +80,16 @@ public class CRFLearner {
 		return fValue;
 	}
 
-	// Use "Inferencer" to compute Marginals Pij = P(Yi=j|Xi).
+	// Compute Marginals Pij = P(Yi=j|Xi).
 	protected void calcPosterior(FactorGraph fg, double[] prob) {
 		m_infer.computeMarginals(fg);//begin to collect the expectations
-		for(int index=0; index<sample.factorList.size(); index++)
+        Factor factor, ptl;
+        int feaID;
+		for(int index=0; index<factorList.size(); index++)
 		{				
-			factor = sample.factorList.get(index);
+			factor = factorList.get(index);
 			ptl = m_infer.lookupMarginal(factor.varSet());
-			feaID = m_featureMap.get( sample.featureType.get(index) ).intValue();					
+			//feaID = m_featureMap.get(featureType.get(index)).intValue();
 		
 			int idx_class = 0;
 			AssignmentIterator assnIt = ptl.assignmentIterator ();
@@ -101,7 +102,7 @@ public class CRFLearner {
 		int offset = 0;
 		for(int i = 0; i < m_classNo; i++) {
             offset = i * (m_featureSize + 1);
-            prob[i] = Utils.dotProduct(m_beta, Xi.get(i), offset);
+            prob[i] = Utils.dotProduct(m_beta, factorList.get(i), offset);
         }
 		
 		double logSum = Utils.logSumOfExponentials(prob);
@@ -146,9 +147,9 @@ public class CRFLearner {
                 int offset = j * (m_featureSize + 1);
                 m_g[offset] += gValue;
                 //(Yij - Pij) * Xi
-                int[] Xij = Xi.get(j);
-                for(int k=0; k<Xij.length; k++)
-                    m_g[offset + k + 1] += gValue * Xij[k];
+                int[] X = factorList.get(j);
+                for(int k=0; k<X.length; k++)
+                    m_g[offset + k + 1] += gValue * X[k];
                 }
         }
 		// LBFGS is used to calculate the minimum value while we are trying to calculate the maximum likelihood.
@@ -192,6 +193,5 @@ public class CRFLearner {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }
