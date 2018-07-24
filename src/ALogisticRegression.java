@@ -21,21 +21,21 @@ public class ALogisticRegression {
 	double m_lambda;
 
 	public ALogisticRegression(int classNo, int featureSize, double lambda) {
-		//super(classNo, featureSize);
 		m_classNo = classNo;
 		m_featureSize = featureSize;
-		m_beta = new double[m_classNo * (m_featureSize + 1)]; //Initialization.
-		m_g = new double[m_beta.length];
-		m_diag = new double[m_beta.length];
+        m_lambda = lambda;
+
+		m_beta = new double[m_classNo * (m_featureSize + 1)];
+        m_diag = new double[m_beta.length];
+        m_g = new double[m_beta.length];
 		m_cache = new double[m_classNo];
-		m_lambda = lambda;
 	}
 
 	public String toString() {
 		return String.format("Logistic Regression[C:%d, F:%d, L:%.2f]", m_classNo, m_featureSize, m_lambda);
 	}
 
-	protected void init() {
+	private void init() {
 		Arrays.fill(m_beta, 0);
 		Arrays.fill(m_diag, 0);
 	}
@@ -47,7 +47,7 @@ public class ALogisticRegression {
 	* value for the point, together with the gradient vector. When iflag
 	* turns to 0, it finds the final point and we get the best beta.
 	*/	
-	public double train(ArrayList<HashMap<Integer, int[]>> trainX, int[] trainY) {
+	public double train(ArrayList< HashMap<Integer, int[]> > trainX, int[] trainY) {
 		int[] iflag = { 0 }, iprint = { -1, 3 };
 		double fValue = 0;
 		int fSize = m_beta.length;
