@@ -15,8 +15,8 @@
       <file leaf-file-name="ALogisticRegression.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ALogisticRegression.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1987">
-              <caret line="151" column="18" lean-forward="true" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
+            <state relative-caret-position="2397">
+              <caret line="151" column="18" lean-forward="false" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -27,17 +27,10 @@
       <file leaf-file-name="fullCRF.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/fullCRF.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
+            <state relative-caret-position="1088">
               <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="44" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3762#3780#0" expanded="true" />
-                <element signature="e#4644#4653#0" expanded="true" />
-                <element signature="e#5834#5859#0" expanded="true" />
-                <element signature="e#5915#5924#0" expanded="true" />
-                <element signature="e#5983#5992#0" expanded="true" />
-                <element signature="e#6642#6650#0" expanded="true" />
-                <element signature="e#7897#7905#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,7 +39,7 @@
       <file leaf-file-name="Utils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/Utils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="862">
+            <state relative-caret-position="2941">
               <caret line="189" column="5" lean-forward="false" selection-start-line="189" selection-start-column="5" selection-end-line="189" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -58,8 +51,8 @@
       <file leaf-file-name="CRFLearner.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CRFLearner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="63" column="67" lean-forward="true" selection-start-line="63" selection-start-column="67" selection-end-line="63" selection-end-column="67" />
+            <state relative-caret-position="408">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="25" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,35 +63,13 @@
       <file leaf-file-name="GraphLearner.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GraphLearner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-221">
-              <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+            <state relative-caret-position="391">
+              <caret line="58" column="52" lean-forward="false" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
               <folding>
-                <element signature="e#3341#3342#0" expanded="true" />
-                <element signature="e#3380#3381#0" expanded="true" />
-                <element signature="e#8615#8632#0" expanded="true" />
-                <element signature="e#9531#9548#0" expanded="true" />
-                <element signature="e#9598#9606#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#3114#3115#0" expanded="true" />
+                <element signature="e#3153#3154#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Trainer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/Trainer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FeatureGenerator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/FeatureGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -140,9 +111,9 @@
         <option value="$PROJECT_DIR$/src/LogisticRegression.java" />
         <option value="$PROJECT_DIR$/src/utils/_SparseFeature.java" />
         <option value="$PROJECT_DIR$/src/utils/Utils.java" />
-        <option value="$PROJECT_DIR$/src/CRFLearner.java" />
         <option value="$PROJECT_DIR$/src/fullCRF.java" />
         <option value="$PROJECT_DIR$/src/ALogisticRegression.java" />
+        <option value="$PROJECT_DIR$/src/CRFLearner.java" />
         <option value="$PROJECT_DIR$/src/GraphLearner.java" />
       </list>
     </option>
@@ -342,6 +313,74 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ALogisticRegression.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2397">
+          <caret line="151" column="18" lean-forward="true" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/fullCRF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="986">
+          <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/Utils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2941">
+          <caret line="189" column="5" lean-forward="false" selection-start-line="189" selection-start-column="5" selection-end-line="189" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CRFLearner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="884">
+          <caret line="63" column="67" lean-forward="true" selection-start-line="63" selection-start-column="67" selection-end-line="63" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/Trainer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="20" lean-forward="false" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/FeatureGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GraphLearner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3114#3115#0" expanded="true" />
+            <element signature="e#3153#3154#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ALogisticRegression.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3111">
           <caret line="193" column="0" lean-forward="true" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
           <folding>
@@ -376,13 +415,6 @@
           <caret line="249" column="36" lean-forward="true" selection-start-line="249" selection-start-column="36" selection-end-line="249" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3762#3780#0" expanded="true" />
-            <element signature="e#4644#4653#0" expanded="true" />
-            <element signature="e#5834#5859#0" expanded="true" />
-            <element signature="e#5915#5924#0" expanded="true" />
-            <element signature="e#5983#5992#0" expanded="true" />
-            <element signature="e#6642#6650#0" expanded="true" />
-            <element signature="e#7897#7905#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -393,13 +425,6 @@
           <caret line="265" column="0" lean-forward="false" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3762#3780#0" expanded="true" />
-            <element signature="e#4644#4653#0" expanded="true" />
-            <element signature="e#5834#5859#0" expanded="true" />
-            <element signature="e#5915#5924#0" expanded="true" />
-            <element signature="e#5983#5992#0" expanded="true" />
-            <element signature="e#6642#6650#0" expanded="true" />
-            <element signature="e#7897#7905#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -440,13 +465,6 @@
           <caret line="265" column="0" lean-forward="false" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3762#3780#0" expanded="true" />
-            <element signature="e#4644#4653#0" expanded="true" />
-            <element signature="e#5834#5859#0" expanded="true" />
-            <element signature="e#5915#5924#0" expanded="true" />
-            <element signature="e#5983#5992#0" expanded="true" />
-            <element signature="e#6642#6650#0" expanded="true" />
-            <element signature="e#7897#7905#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -487,13 +505,6 @@
           <caret line="13" column="8" lean-forward="false" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3762#3780#0" expanded="true" />
-            <element signature="e#4644#4653#0" expanded="true" />
-            <element signature="e#5834#5859#0" expanded="true" />
-            <element signature="e#5915#5924#0" expanded="true" />
-            <element signature="e#5983#5992#0" expanded="true" />
-            <element signature="e#6642#6650#0" expanded="true" />
-            <element signature="e#7897#7905#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -546,7 +557,7 @@
     <entry file="file://$PROJECT_DIR$/src/utils/BaseClassifier.java" />
     <entry file="file://$PROJECT_DIR$/src/utils/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="862">
+        <state relative-caret-position="2941">
           <caret line="189" column="5" lean-forward="false" selection-start-line="189" selection-start-column="5" selection-end-line="189" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -556,27 +567,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ALogisticRegression.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1987">
-          <caret line="151" column="18" lean-forward="true" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
+        <state relative-caret-position="2397">
+          <caret line="151" column="18" lean-forward="false" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fullCRF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3762#3780#0" expanded="true" />
-            <element signature="e#4644#4653#0" expanded="true" />
-            <element signature="e#5834#5859#0" expanded="true" />
-            <element signature="e#5915#5924#0" expanded="true" />
-            <element signature="e#5983#5992#0" expanded="true" />
-            <element signature="e#6642#6650#0" expanded="true" />
-            <element signature="e#7897#7905#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -589,16 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CRFLearner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="67" lean-forward="true" selection-start-line="63" selection-start-column="67" selection-end-line="63" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/Trainer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -607,16 +591,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/fullCRF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="64" column="44" lean-forward="false" selection-start-line="64" selection-start-column="37" selection-end-line="64" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CRFLearner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="25" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/GraphLearner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-221">
-          <caret line="23" column="45" lean-forward="true" selection-start-line="23" selection-start-column="45" selection-end-line="23" selection-end-column="45" />
+        <state relative-caret-position="391">
+          <caret line="58" column="52" lean-forward="false" selection-start-line="58" selection-start-column="52" selection-end-line="58" selection-end-column="52" />
           <folding>
-            <element signature="e#3341#3342#0" expanded="true" />
-            <element signature="e#3380#3381#0" expanded="true" />
-            <element signature="e#8615#8632#0" expanded="true" />
-            <element signature="e#9531#9548#0" expanded="true" />
-            <element signature="e#9598#9606#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3114#3115#0" expanded="true" />
+            <element signature="e#3153#3154#0" expanded="true" />
           </folding>
         </state>
       </provider>

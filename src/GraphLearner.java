@@ -36,31 +36,25 @@ import edu.umass.cs.mallet.grmm.types.Variable;
 public class GraphLearner implements Maximizable.ByGradient {
 
     private double[] m_weights; // weights for features (analog to logistic regression) to be optimized
-    private double[] m_constraints; // observed counts for each feature (over cliques) in the training sample set (x, y)
-    private double[] m_exptectations; // expected counts for each feature (over cliques) based on the training sample set (X)
 
-    private int[] m_foldAssign;
-    private int m_foldID;
-
-    Maximizer.ByGradient m_maxer = new LimitedMemoryBFGS(); // gradient based optimizer
+    private Maximizer.ByGradient m_maxer = new LimitedMemoryBFGS(); // gradient based optimizer
+    private Inferencer m_infer; // inferencer for marginal computation
 
     ArrayList<Thread4Learning> m_trainSampleSet = null; // training sample (factor, feaType, Y)
     ArrayList<FactorGraph> m_trainGraphSet = null;
     ArrayList<Assignment> m_trainAssignment = null;
     ArrayList<String> m_trainIDs = null;
 
-    TreeMap<Integer, Integer> m_featureMap;
+    private TreeMap<Integer, Integer> m_featureMap;
 
-    Inferencer m_infer; // inferencer for marginal computation
+    private boolean m_scaling;
+    private boolean m_updated;
+    private boolean m_trained;
+    private double m_lambda;
+    private double m_oldLikelihood;
+    private Random m_rand = new Random();
 
-    boolean m_scaling;
-    boolean m_updated;
-    boolean m_trained;
-    double m_lambda;
-    double m_oldLikelihood;
-    Random m_rand = new Random();
-
-    BufferedWriter m_writer;
+    private BufferedWriter m_writer;
 
     GraphLearner(ArrayList<Thread4Learning> traininglist){
 
