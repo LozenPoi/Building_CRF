@@ -232,8 +232,7 @@ public class fullCRF {
         String inputFile = "./data/....txt";
         //loadData(inputFile);
         
-        //ALogisticRegression alr = new ALogisticRegression(numClass, numFeature, 1.0); 
-        
+        //ALogisticRegression alr = new ALogisticRegression(numClass, numFeature, 1.0);
         //crossValidation(alr, 10);
         
         FactorGraph mdl = new FactorGraph ();
