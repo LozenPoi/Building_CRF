@@ -40,10 +40,10 @@ public class GraphLearner implements Maximizable.ByGradient {
     private Maximizer.ByGradient m_maxer = new LimitedMemoryBFGS(); // gradient based optimizer
     private Inferencer m_infer; // inferencer for marginal computation
 
-    ArrayList<Thread4Learning> m_trainSampleSet = null; // training sample (factor, feaType, Y)
-    ArrayList<FactorGraph> m_trainGraphSet = null;
-    ArrayList<Assignment> m_trainAssignment = null;
-    ArrayList<String> m_trainIDs = null;
+    private ArrayList<Thread4Learning> m_trainSampleSet = null; // training sample (factor, feaType, Y)
+    private ArrayList<FactorGraph> m_trainGraphSet = null;
+    private ArrayList<Assignment> m_trainAssignment = null;
+    private ArrayList<String> m_trainIDs = null;
 
     private TreeMap<Integer, Integer> m_featureMap;
 
@@ -179,6 +179,7 @@ public class GraphLearner implements Maximizable.ByGradient {
         return m_oldLikelihood;//negative log-likelihood or log-likelihood?
     }
 
+    //
     @Override
     public void getValueGradient(double[] buffer) {
         FactorGraph graph = null;
@@ -239,6 +240,7 @@ public class GraphLearner implements Maximizable.ByGradient {
         return weights;
     }
 
+    //
     public void buildFactorGraphs(){
         //convert and cache the factors in each thread into a factor graph
         boolean init = (m_trainGraphSet == null);
@@ -305,7 +307,7 @@ public class GraphLearner implements Maximizable.ByGradient {
     }
 
     // Update the model parameters using a sample.
-    // This is useful for active learning (the training set is updated by adding new samples into it).
+    // This is useful for active learning (when the training set is updated by adding new samples into it).
     public void updateModel(TreeMap<Integer, Integer> new_featureMap){
         //
     }
