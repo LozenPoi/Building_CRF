@@ -14,11 +14,13 @@ public class Trainer {
         // Each string is stored as an object specifying features as table factors.
         ArrayList<String4Learning> str_list = new ArrayList<>();
 
-        ArrayList<Vector> list_feature_vec;
+        ArrayList<Vector> list_node_feature;
+        ArrayList<Vector> list_edge_feature;
         ArrayList<Integer> label_vec;
 
-        // For each training sample, construct a factor graph and a list of factors where the list of factors stores
-        // edge and node features.
+        // For each training sample, construct a factor graph via variables. and a list of table factors to specify edge
+        // and node features.
+        for
 
 
 
