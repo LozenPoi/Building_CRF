@@ -19,7 +19,7 @@ public class FeatureGenerator {
         dict_node_feature = new HashMap<>();
         dict_edge_feature = new HashMap<>();
         // Assign an ID to each feature type.
-        dict_node_feature.put(1,"token");
+        dict_node_feature.put(0,"token");
         dict_edge_feature.put(1,"B followed by I");
     }
 
@@ -40,20 +40,30 @@ public class FeatureGenerator {
 
 
     // This is a node feature which is the character itself.
-    private int currentToken(char token){
-        int index;
+    private int currentToken(String token){
+        int index = 0;
         if(dict_token.containsValue(token)){
-            // get the index
+            for(Integer idx: dict_token.keySet()){
+                if(dict_token.get(idx).equals(token)){
+                    index = idx;
+                }
+            }
         }
         else{
-            // update the dictionary and get the index
+            index = dict_token.size();
+            dict_token.put(index,token);
         }
         return index;
     }
 
     // This is an edge feature which indicates label "B" followed by label "I".
-    private boolean B_to_I(){
-        //
+    private boolean B_to_I(String label_previous, String label_current){
+        if(label_previous.substring(2).equals(label_current.substring(2))){
+            return (label_previous.charAt(0) == 'b') && (label_current.charAt(0) == 'i');
+        }
+        else {
+            return false;
+        }
     }
 
 
