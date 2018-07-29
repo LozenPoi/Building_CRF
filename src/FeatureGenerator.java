@@ -27,7 +27,9 @@ public class FeatureGenerator {
     public void readData(){}
 
     // Get the node features for all node feature types.
-    public void getNodeFeature(){}
+    public void getNodeFeature(String token){
+        //
+    }
 
     // Get the edge features for all edge feature types.
     public void getEdgeFeature(){}
