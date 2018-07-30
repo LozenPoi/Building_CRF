@@ -89,7 +89,7 @@ public class FeatureGenerator {
     }
 
     // This is an edge feature which indicates label "B" followed by label "I".
-    private boolean B_to_I(String label_previous, String label_current){
+    public boolean B_to_I(String label_previous, String label_current){
         if(label_previous.substring(2).equals(label_current.substring(2))){
             return (label_previous.charAt(0) == 'b') && (label_current.charAt(0) == 'i');
         }

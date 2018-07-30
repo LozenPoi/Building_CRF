@@ -2,14 +2,10 @@ import edu.umass.cs.mallet.grmm.types.Factor;
 import edu.umass.cs.mallet.grmm.types.LogTableFactor;
 import edu.umass.cs.mallet.grmm.types.Variable;
 
-import javax.imageio.IIOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 /**
  *  This is a class putting node and edge features into table factors. The feature definition is specified in the class
@@ -21,7 +17,8 @@ public class Trainer {
     // Create a feature generator.
     FeatureGenerator featureGen = new FeatureGenerator();
 
-    public ArrayList<String4Learning> string4Learning(String sample_path, String label_path){
+    public ArrayList<String4Learning> string4Learning(ArrayList<String> sample_string,
+                                                      ArrayList<ArrayList<Integer>> label_vec){
 
         // Each string is stored as an object specifying features as table factors.
         ArrayList<String4Learning> str_list = new ArrayList<>();
@@ -30,29 +27,35 @@ public class Trainer {
         // the same length equivalent to the string length. This is for a single sequence.
         HashMap<Integer, ArrayList<Double>> list_node_feature = new HashMap<>();
 
-        // This is a label vector where each entry is a label index.
-        ArrayList<ArrayList<Integer>> label_vec = new ArrayList<>();
-
-        // This store the training samples.
-        ArrayList<String> sample_string = new ArrayList<>();
-
         int num_sample; // number of strings
         int num_label; // number of labels (number of possible outcomes of variables)
         int num_node_feature_type;  // number of node feature types
         int num_edge_feature_type;  // number of edge feature types
-        int[] len_string; // length of each string
+        ArrayList<Integer> len_string = new ArrayList<>(); // length of each string
 
-        // Convert the labels into vectors.
-        label_vec = label_to_vector(label_path);
+//        // Convert the labels into vectors.
+//        label_vec = label_to_vector(label_path);
+//
+//        // Read the strings into an array.
+//        try(BufferedReader br = new BufferedReader(new FileReader(sample_path))){
+//            String line;
+//            while ((line = br.readLine()) != null){
+//                sample_string.add(line);
+//            }
+//        }catch(Exception e){
+//            System.out.println("The training file doesn't exist.");
+//        }
 
-        // Read the strings into an array.
-        try(BufferedReader br = new BufferedReader(new FileReader(sample_path))){
-            String line;
-            while ((line = br.readLine()) != null){
-                sample_string.add(line);
-            }
-        }catch(Exception e){
-            System.out.println("The training file doesn't exist.");
+        // Get the size of label dictionary.
+        num_label = featureGen.dict_label.size();
+
+        num_node_feature_type = featureGen.dict_node_feature.size();
+        num_edge_feature_type = featureGen.dict_edge_feature.size();
+
+        // Get the length of all the input strings.
+        num_sample = sample_string.size();
+        for(String s: sample_string){
+            len_string.add(s.length());
         }
 
         // For each training sample, construct a factor graph via variables. and a list of table factors to specify edge
@@ -63,14 +66,14 @@ public class Trainer {
 
             // Declare variables.
             // Do we need to set different number of outcomes for different node variables?
-            Variable[] allVars = new Variable[len_string[idx_sample]];
-            for(int i=0; i<len_string[idx_sample]; i++){
+            Variable[] allVars = new Variable[len_string.get(idx_sample)];
+            for(int i=0; i<len_string.get(idx_sample); i++){
                 allVars[i] = new Variable(num_label);
             }
 
             // Add node features.
             list_node_feature = featureGen.getNodeFeature(sample_string.get(idx_sample));
-            for(int i=0; i<len_string[idx_sample]; i++){
+            for(int i=0; i<len_string.get(idx_sample); i++){
                 for(int j=0; j<num_node_feature_type; j++){
                     double[] feature_value_arr = new double[num_label];
                     // Node features and transition(edge) features are indexed separately.
@@ -80,6 +83,20 @@ public class Trainer {
                     }
                     Factor ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[i]}, feature_value_arr);
                     factorList.add(ptl);
+                }
+            }
+
+            // Create edge features.
+            double feature_value;
+            double[] feature_value_arr = double[num_label*num_label];
+            for(Integer idx1: featureGen.dict_label.keySet()){
+                for(Integer idx2: featureGen.dict_label.keySet()){
+                    if(featureGen.B_to_I(featureGen.dict_label.get(idx1),featureGen.dict_label.get(idx2))){
+                        feature_value = 1;
+                    }else{
+                        feature_value = 0;
+                    }
+                    feature_value_arr.add(feature_value);
                 }
             }
 
