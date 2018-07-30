@@ -19,30 +19,54 @@ public class FeatureGenerator {
         dict_node_feature = new HashMap<>();
         dict_edge_feature = new HashMap<>();
         // Assign an ID to each feature type.
-        dict_node_feature.put(0,"token");
-        dict_edge_feature.put(1,"B followed by I");
+        dict_node_feature.put(0,"currentToken");
+        dict_edge_feature.put(0,"B_to_I");
     }
-
-    // Read data through files.
-    public void readData(){}
 
     // Get the node features for all node feature types.
-    public void getNodeFeature(String token){
-        //
+    public HashMap<Integer,ArrayList<Double>> getNodeFeature(String sample){
+        HashMap<Integer,ArrayList<Double>> feature_vectors = new HashMap<>();
+        // Get the current token (feature ID: 0).
+        ArrayList<Double> current_token = new ArrayList<>();
+        // Get if it is a digit (feature ID: 1).
+        ArrayList<Double> is_digit = new ArrayList<>();
+        for(int i=0; i<sample.length(); i++){
+            current_token.add((double)currentToken(Character.toString(sample.charAt(i))));
+            if(isDigit(Character.toString(sample.charAt(i)))) {
+                is_digit.add(1.0);
+            }else{
+                is_digit.add(0.0);
+            }
+        }
+        feature_vectors.put(0,current_token);
+        feature_vectors.put(1,is_digit);
+        return feature_vectors;
     }
 
-    // Get the edge features for all edge feature types.
-    public void getEdgeFeature(){}
-
-    // Update the token dictionary.
-    public void update_token(){}
-
     // Update the label dictionary.
-    public void update_label(){}
+    public int update_label(String label){
+        int size;
+        if(!dict_label.containsValue(label)){
+            size = dict_label.size();
+            dict_label.put(size,label);
+        }else{
+            size = getLabelIdx(label);
+        }
+        return size;
+    }
 
+    // Get a label index.
+    public int getLabelIdx(String label){
+        for(Integer i: dict_label.keySet()){
+            if(dict_label.get(i).equals(label)){
+                return i;
+            }
+        }
+        return -1;  // This indicates that the label is not in the dictionary.
+    }
 
     // This is a node feature which is the character itself.
-    private int currentToken(String token){
+    public int currentToken(String token){
         int index = 0;
         if(dict_token.containsValue(token)){
             for(Integer idx: dict_token.keySet()){
@@ -53,9 +77,15 @@ public class FeatureGenerator {
         }
         else{
             index = dict_token.size();
-            dict_token.put(index,token);
+            dict_token.put(index,token);    // Update token dictionary.
         }
         return index;
+    }
+
+    // Check if a character (token) is a digit.
+    private boolean isDigit(String token){
+        char token_char = token.charAt(0);
+        return Character.isDigit(token_char);
     }
 
     // This is an edge feature which indicates label "B" followed by label "I".
@@ -67,6 +97,5 @@ public class FeatureGenerator {
             return false;
         }
     }
-
 
 }
