@@ -20,7 +20,8 @@ public class FeatureGenerator {
         dict_edge_feature = new HashMap<>();
         // Assign an ID to each feature type.
         dict_node_feature.put(0,"currentToken");
-        dict_edge_feature.put(0,"B_to_I");
+        dict_node_feature.put(1,"isDigit");
+        dict_edge_feature.put(0,"transition");
     }
 
     // Get the node features for all node feature types.
@@ -86,16 +87,6 @@ public class FeatureGenerator {
     private boolean isDigit(String token){
         char token_char = token.charAt(0);
         return Character.isDigit(token_char);
-    }
-
-    // This is an edge feature which indicates label "B" followed by label "I".
-    public boolean B_to_I(String label_previous, String label_current){
-        if(label_previous.substring(2).equals(label_current.substring(2))){
-            return (label_previous.charAt(0) == 'b') && (label_current.charAt(0) == 'i');
-        }
-        else {
-            return false;
-        }
     }
 
     // This is the first-order edge feature enumerating all possible label transitions.
