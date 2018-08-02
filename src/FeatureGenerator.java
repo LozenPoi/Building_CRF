@@ -98,4 +98,20 @@ public class FeatureGenerator {
         }
     }
 
+    // This is the first-order edge feature enumerating all possible label transitions.
+    public double[] label_transition(int label1, int label2){
+        int len_arr = dict_label.size() * dict_label.size();
+        double[] arr = new double[len_arr];
+        for(int i=0; i<dict_label.size(); i++){
+            for(int j=0; j<dict_label.size(); j++){
+                if((i==label1)&&(j==label2)){
+                    arr[i*dict_label.size()+j] = 1;
+                }else{
+                    arr[i*dict_label.size()+j] = 0;
+                }
+            }
+        }
+        return arr;
+    }
+
 }
