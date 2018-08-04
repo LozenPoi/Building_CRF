@@ -35,8 +35,6 @@ public class Trainer {
         int num_edge_feature_type;  // number of edge feature types
         ArrayList<Integer> len_string = new ArrayList<>(); // length of each string
 
-        List<Integer> featureType;  // for different feature definitions
-
         // Get the size of label dictionary.
         num_label = featureGen.dict_label.size();
 
@@ -55,6 +53,7 @@ public class Trainer {
         for(int idx_sample=0; idx_sample<num_sample; idx_sample++){
 
             ArrayList<Factor> factorList = new ArrayList<>();   // list of table factors for the current string
+            ArrayList<Integer> featureType = new ArrayList<>(); // corresponding feature ID for each list of factors
 
             // Declare variables.
             // Do we need to set different number of outcomes for different node variables?
@@ -74,10 +73,12 @@ public class Trainer {
                     Arrays.fill(feature_value_arr, feature_vector.get(j));
                     ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[j]}, feature_value_arr);
                     factorList.add(ptl);
+                    featureType.add(i);
                 }
             }
 
             // Add all first-order transition features f(y_(i-1),y_i).
+            int current_size = featureType.size();
             double[] trans_feature_arr;
             for(int i=0; i<num_label; i++){
                 for(int j=0; j<num_label; j++){
@@ -86,6 +87,7 @@ public class Trainer {
                         ptl = LogTableFactor.makeFromValues(
                                 new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
                         factorList.add(ptl);
+                        featureType.add(current_size+i*num_label+j);
                     }
                 }
             }
