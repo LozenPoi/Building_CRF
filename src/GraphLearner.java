@@ -250,6 +250,21 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     @Override
+    public double getValue(){
+        if ( m_updated )
+        {
+            buildFactorGraphs();
+            m_updated = false;
+        }
+        else
+            return m_oldLikelihood;
+
+        double tmp;
+        FactorGraph graph = null;
+        Assignment assign = null;
+    }
+
+    @Override
     public void getValueGradient(double[] buffer) {
         FactorGraph graph = null;
         Factor factor = null, ptl = null;
