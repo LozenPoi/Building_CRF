@@ -3,6 +3,7 @@ import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.maximize.Maximizer;
 import edu.umass.cs.mallet.grmm.inference.Inferencer;
 import edu.umass.cs.mallet.grmm.inference.LoopyBP;
+import edu.umass.cs.mallet.grmm.inference.TRP;
 import edu.umass.cs.mallet.grmm.types.*;
 
 import java.io.BufferedWriter;
@@ -326,11 +327,10 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     public double doTraining(int maxIter) {
-        initialization(true);//build the initial factor graphs and collect the constraints from data
-        double oldLikelihood = getValue(), likelihood; // initial likelihood
+        initialization(true);   //build the initial factor graphs and collect the constraints from data
+        double oldLikelihood = getValue(), likelihood;  // initial likelihood
         try {
-            if ( m_maxer.maximize(this, maxIter) == false )
-            {//if failed, try it again
+            if (!m_maxer.maximize(this, maxIter)){  //if failed, try it again
                 System.err.println("Optimizer fails to converge!");
                 ((LimitedMemoryBFGS)m_maxer).reset();
                 m_maxer.maximize(this, maxIter);
@@ -338,26 +338,22 @@ public class GraphLearner implements Maximizable.ByGradient{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         likelihood = getValue();
         m_trained = true;
 
         System.out.println("Training process start, with likelihood " + oldLikelihood);
         System.out.println("Training process finish, with likelihood " + likelihood);
 
-        try
-        {
-            Map<Integer, Double> weights = getWeights();
-            for(Integer fea : weights.keySet())
-                m_writer.write(fea.toString() + " : " + weights.get(fea).toString() + " ");
-            m_writer.write("\t" + likelihood + "\n");
-            m_writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+//        try {
+//            Map<Integer, Double> weights = getWeights();
+//            for(Integer fea : weights.keySet())
+//                m_writer.write(fea.toString() + " : " + weights.get(fea).toString() + " ");
+//            m_writer.write("\t" + likelihood + "\n");
+//            m_writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return likelihood;
     }
-
 
 }

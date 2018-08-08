@@ -17,7 +17,11 @@ import java.util.List;
 public class Trainer {
 
     // Create a feature generator.
-    FeatureGenerator featureGen = new FeatureGenerator();
+    FeatureGenerator featureGen;
+
+    public Trainer(){
+        featureGen = new FeatureGenerator();
+    }
 
     public ArrayList<String4Learning> string4Learning(ArrayList<String> sample_string,
                                                       ArrayList<ArrayList<Integer>> label_vec){
@@ -144,10 +148,6 @@ public class Trainer {
             System.out.println("File doesn't exist.");
         }
         return token_vector;
-    }
-
-    public static void main (){
-        // To-do: main function for training.
     }
 
 }
