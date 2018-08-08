@@ -1,44 +1,22 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
-import java.util.TreeMap;
-import java.util.Vector;
-import java.util.Map.Entry;
-
 import edu.umass.cs.mallet.base.maximize.LimitedMemoryBFGS;
 import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.maximize.Maximizer;
 import edu.umass.cs.mallet.grmm.inference.Inferencer;
 import edu.umass.cs.mallet.grmm.inference.LoopyBP;
-import edu.umass.cs.mallet.grmm.inference.TRP;
-import edu.umass.cs.mallet.grmm.types.Assignment;
-import edu.umass.cs.mallet.grmm.types.AssignmentIterator;
-import edu.umass.cs.mallet.grmm.types.Factor;
-import edu.umass.cs.mallet.grmm.types.FactorGraph;
-import edu.umass.cs.mallet.grmm.types.VarSet;
-import edu.umass.cs.mallet.grmm.types.Variable;
+import edu.umass.cs.mallet.grmm.types.*;
 
-/**
- * @author Hongning Wang (wang296@illinois.edu)
- * Function: Learning model parameters by l-BFGS
- */
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class GraphLearner implements Maximizable.ByGradient{
+
     private double[] m_weights; //weights for each feature, to be optimized
     private Map<Integer, Boolean> m_mask; //turn on/off the features to learn
     private double[] m_constraints; //observed counts for each feature (over cliques) in the training sample set (x, y)
     private double[] m_exptectations; //expected counts for each feature (over cliques) based on the training sample set (X)
-
-    private int[] m_foldAssign;
-    private int m_foldID;
 
     Maximizer.ByGradient m_maxer = new LimitedMemoryBFGS();//gradient based optimizer
 
@@ -60,7 +38,7 @@ public class GraphLearner implements Maximizable.ByGradient{
     BufferedWriter m_writer;
 
     GraphLearner(ArrayList<String4Learning> traininglist){
-        m_infer = new LoopyBP(50); //TRP(); //
+        m_infer = new LoopyBP(50);
 
         int featureDim = setTrainingSet(traininglist);
         m_weights = new double[featureDim];
@@ -73,90 +51,39 @@ public class GraphLearner implements Maximizable.ByGradient{
         m_updated = true;
         m_trained = false;
         m_rand = new Random();
-        m_foldAssign = null;
 
         m_lambda = 2.0;//L2 regularization
         m_oldLikelihood = -Double.MAX_EXPONENT;//init value
 
-        try {
-            m_writer = new BufferedWriter(new FileWriter(new File("trace.dat")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            m_writer = new BufferedWriter(new FileWriter(new File("trace.dat")));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private int setTrainingSet(ArrayList<String4Learning> traininglist){
         m_trainSampleSet = traininglist;
-
-        m_featureMap = new TreeMap<Integer, Integer>();
-        for(String4Learning sample : traininglist)
-        {
-            for(Integer feature : sample.featureType)
-            {
-                if ( m_featureMap.containsKey(feature) == false )
-                    m_featureMap.put(feature, new Integer(m_featureMap.size()));
+        m_featureMap = new TreeMap<>();
+        for(String4Learning sample : traininglist){
+            for(Integer feature : sample.featureType){
+                if (!m_featureMap.containsKey(feature)){
+                    m_featureMap.put(feature, m_featureMap.size());
+                }
             }
         }
         return m_featureMap.size();
     }
 
-    private void allocateFoldAssignment(int fold)
-    {
-        m_foldAssign = new int[m_trainSampleSet.size()];
-        for(int i=0; i<m_trainSampleSet.size(); i++){
-            m_foldAssign[i] = m_rand.nextInt(fold);
-        }
-    }
-
     public Map<Integer, Double> getWeights(){
-        Map<Integer, Double> weights = new TreeMap<Integer, Double>();
-        Iterator<Entry<Integer, Integer>> it = m_featureMap.entrySet().iterator();
+        Map<Integer, Double> weights = new TreeMap<>();
+        Iterator<Map.Entry<Integer, Integer>> it = m_featureMap.entrySet().iterator();
         Map.Entry<Integer, Integer> pairs;
-        while (it.hasNext())
-        {
-            pairs = (Map.Entry<Integer, Integer>)it.next();
-            weights.put(pairs.getKey(), new Double(m_weights[pairs.getValue().intValue()]));
+        while (it.hasNext()) {
+            pairs = it.next();
+            weights.put(pairs.getKey(), m_weights[pairs.getValue()]);
         }
         return weights;
-    }
-
-    public void LoadWeights(String filename){
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
-            String tmpTxt;
-            String[] feature;
-            int feaPtx;
-            Integer fea;
-            while( (tmpTxt=reader.readLine()) != null ){
-                feature = tmpTxt.split(" : ");
-                fea = new Integer(feature[0]);
-                if( m_featureMap.containsKey(fea) )
-                {
-                    feaPtx = m_featureMap.get(fea).intValue();
-                    m_weights[feaPtx] = Double.valueOf(feature[1]);
-                }
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void SaveWeights(String filename){
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filename)));//append mode
-            Map<Integer, Double> weights = getWeights();
-            for(Integer fea : weights.keySet())
-                writer.write(fea.toString() + " : " + weights.get(fea).toString() + "\n");
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setMask(Map<Integer, Boolean> masks)
-    {
-        m_mask = masks;
     }
 
     @Override
@@ -165,7 +92,7 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     @Override
-    public double getParameter(int index) {
+    public double getParameter(int index){
         if ( index<m_weights.length)
             return m_weights[index];
         else
@@ -173,14 +100,14 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     @Override
-    public void getParameters(double[] buffer) {
+    public void getParameters(double[] buffer){
         if ( buffer.length != m_weights.length )
             buffer = new double[m_weights.length];
         System.arraycopy(m_weights, 0, buffer, 0, m_weights.length);
     }
 
     @Override
-    public void setParameter(int index, double value) {
+    public void setParameter(int index, double value){
         if ( index<m_weights.length )
             m_weights[index] = value;
         else{
@@ -192,10 +119,10 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     @Override
-    public void setParameters(double[] params) {
-        if( params.length != m_weights.length )
+    public void setParameters(double[] params){
+        if( params.length != m_weights.length ){
             m_weights = new double[params.length];
-
+        }
         Map<Integer, Double> weights = getWeights();
         try {
             for(Integer fea : weights.keySet())
@@ -205,15 +132,13 @@ public class GraphLearner implements Maximizable.ByGradient{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         System.arraycopy(params, 0, m_weights, 0, m_weights.length);
         m_updated = true;
     }
 
     @Override
     public double getValue() {
-        if ( m_updated )
-        {
+        if ( m_updated ){
             buildFactorGraphs();
             m_updated = false;
         }
@@ -221,28 +146,25 @@ public class GraphLearner implements Maximizable.ByGradient{
             return m_oldLikelihood;
 
         double tmp;
-        FactorGraph graph = null;
-        Assignment assign = null;
+        FactorGraph graph;
+        Assignment assign;
 
         m_oldLikelihood = 0;
-        for(int feaID=0; feaID<m_weights.length; feaID++)
+        for(int feaID=0; feaID<m_weights.length; feaID++) {
             m_oldLikelihood -= m_weights[feaID] * m_weights[feaID];
-        m_oldLikelihood *= m_lambda / 2;//L2 penalty
+        }
+        m_oldLikelihood *= m_lambda/2;    //L2 penalty
 
         double scale = m_scaling ? (1.0/m_trainSampleSet.size()) : 1.0;
-        for(int threadID=0; threadID<m_trainGraphSet.size(); threadID++)
-        {
-            if( m_foldAssign !=null && m_foldAssign[threadID] == m_foldID )
-                continue;//for cross validation
-
-            assign = m_trainAssignment.get(threadID);
-            graph = m_trainGraphSet.get(threadID);
+        for(int stringID=0; stringID<m_trainGraphSet.size(); stringID++) {
+            assign = m_trainAssignment.get(stringID);
+            graph = m_trainGraphSet.get(stringID);
             m_infer.computeMarginals(graph);
             tmp = m_infer.lookupLogJoint(assign);
-            if( Double.isNaN(tmp) == true || tmp>0 )
-                System.err.println("In thread " + m_trainIDs.get(threadID) + " likelihood failed with " + tmp + "!");
+            if( Double.isNaN(tmp) || tmp>0 )
+                System.err.println("likelihood failed with " + tmp + "!");
             else
-                m_oldLikelihood += tmp * scale;
+                m_oldLikelihood += tmp*scale;
         }
 
         System.out.println("[Info]Log-likelihood " + m_oldLikelihood);
@@ -250,57 +172,38 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     @Override
-    public double getValue(){
-        if ( m_updated )
-        {
-            buildFactorGraphs();
-            m_updated = false;
-        }
-        else
-            return m_oldLikelihood;
-
-        double tmp;
-        FactorGraph graph = null;
-        Assignment assign = null;
-    }
-
-    @Override
     public void getValueGradient(double[] buffer) {
-        FactorGraph graph = null;
-        Factor factor = null, ptl = null;
-        String4Learning sample = null;
+        FactorGraph graph;
+        Factor factor, ptl;
+        String4Learning sample;
         int feaID;
 
         double feaValue, prob;
 
         for(feaID=0; feaID<m_exptectations.length; feaID++)
-            m_exptectations[feaID] = 0;//clear the SS
+            m_exptectations[feaID] = 0; //clear the SS
 
-        for(int sampleID=0; sampleID<m_trainSampleSet.size(); sampleID++)
-        {
-            if( m_foldAssign !=null && m_foldAssign[sampleID] == m_foldID )
-                continue;//for cross validation
-
+        for(int sampleID=0; sampleID<m_trainSampleSet.size(); sampleID++) {
             graph = m_trainGraphSet.get(sampleID);
             sample = m_trainSampleSet.get(sampleID);
 
             m_infer.computeMarginals(graph);//begin to collect the expectations
-            for(int index=0; index<sample.factorList.size(); index++)
-            {
+            for(int index=0; index<sample.factorList.size(); index++) {
                 if ( m_mask != null && m_mask.containsKey(sample.featureType.get(index))
-                        && m_mask.get(sample.featureType.get(index)).booleanValue() == false )
+                        && !m_mask.get(sample.featureType.get(index)) ){
                     continue;
+                }
 
                 factor = sample.factorList.get(index);
                 ptl = m_infer.lookupMarginal(factor.varSet());
-                feaID = m_featureMap.get( sample.featureType.get(index) ).intValue();
+                feaID = m_featureMap.get(sample.featureType.get(index));
 
                 AssignmentIterator assnIt = ptl.assignmentIterator ();
                 while (assnIt.hasNext ()) {
-                    feaValue = factor.logValue(assnIt);//feature value;
-                    prob = ptl.value (assnIt);//get the marginal probability for this local configuration
+                    feaValue = factor.logValue(assnIt); //feature value;
+                    prob = ptl.value (assnIt);  //get the marginal probability for this local configuration
                     m_exptectations[feaID] += feaValue * prob;
-                    assnIt.advance ();
+                    assnIt.advance();
                 }
             }
         }
@@ -317,45 +220,42 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     void initialization(boolean initWeight){
-        FactorGraph graph = null;
-        String4Learning sample = null;
-        Assignment assign = null;
-        Factor factor = null;
+        FactorGraph graph;
+        String4Learning sample;
+        Assignment assign;
+        Factor factor;
         int[] assignment;
-        int i, feaID;
+        int feaID;
         double feaValue;
 
         //build the initial factor graph
-        if( initWeight )
+        if(initWeight){
             initWeight();
+        }
         buildFactorGraphs();
 
         //collect the feature counts in the training set
-        m_trainAssignment = new ArrayList<Assignment>(m_trainSampleSet.size());
+        m_trainAssignment = new ArrayList<>(m_trainSampleSet.size());
         for(int sampleID=0; sampleID<m_trainSampleSet.size(); sampleID++){
             graph = m_trainGraphSet.get(sampleID);
             sample = m_trainSampleSet.get(sampleID);
 
-            //get the answer's assignment over the graph
-            assignment = new int[sample.parent.size()];
-            for(i=0; i<sample.parent.size(); i++)
-                assignment[i] = sample.parent.get(i).intValue();
+            //get the graph's assignment over the graph
+            assignment = new int[sample.labelList.size()];
+            for(int i=0; i<sample.labelList.size(); i++)
+                assignment[i] = sample.labelList.get(i);
             assign = new Assignment(graph, assignment);
             m_trainAssignment.add(assign);
 
-            if( m_foldAssign != null && m_foldAssign[sampleID] == m_foldID )
-                continue;//for cross validation
-
-            for(i=0; i<sample.factorList.size(); i++)
-            {
+            for(int i=0; i<sample.factorList.size(); i++){
                 if ( m_mask != null && m_mask.containsKey(sample.featureType.get(i))
-                        && m_mask.get(sample.featureType.get(i)).booleanValue() == false )
+                        && !m_mask.get(sample.featureType.get(i)) ){
                     continue;
-
+                }
                 factor = sample.factorList.get(i);
-                feaID = m_featureMap.get( sample.featureType.get(i) ).intValue();
-                feaValue = factor.logValue(assign);//retrieve the assignment from the subset
-                m_constraints[feaID] += feaValue;
+                feaID = m_featureMap.get(sample.featureType.get(i));
+                feaValue = factor.logValue(assign);
+                m_constraints[feaID] += feaValue;   // valid for binary feature only?
             }
         }
         System.out.println("Finish collecting sufficient statistics...");
@@ -363,164 +263,72 @@ public class GraphLearner implements Maximizable.ByGradient{
     }
 
     void buildFactorGraphs(){
-        //convert and cache the factors in each thread into a factor graph
+
+        FactorGraph stringGraph;
+        String4Learning tmpString;
+        Factor factor;
+        VarSet clique;
+        int index, feaID, stringID;
+        HashMap<VarSet, Integer> factorIndex = new HashMap<>();
+        Vector<Factor> factorList = new Vector<>();
+
+        // Convert and cache the factors in each strings into a factor graph.
         boolean init = (m_trainGraphSet == null);
-        if ( init == true )//init for the first time
-            m_trainGraphSet = new ArrayList<FactorGraph>(m_trainSampleSet.size());
+        // Initialize for the first time.
+        if(init){
+            m_trainGraphSet = new ArrayList<>(m_trainSampleSet.size());
+        }
 
-        FactorGraph threadGraph = null;
-        String4Learning tmpThread = null;
-        Factor factor = null;
-        VarSet clique = null;
-        int index, feaID, threadID;
+        for(stringID=0; stringID<m_trainSampleSet.size(); stringID++){
 
-        HashMap<VarSet, Integer> factorIndex = new HashMap<VarSet, Integer>();
-        Vector<Factor> factorList = new Vector<Factor>();
-
-        for(threadID=0; threadID<m_trainSampleSet.size(); threadID++)
-        {
-            tmpThread = m_trainSampleSet.get(threadID);
-            if ( init )
-                threadGraph = new FactorGraph();
-            else
-            {
-                threadGraph = m_trainGraphSet.get(threadID);
-                threadGraph.clear();//is it safe?
+            tmpString = m_trainSampleSet.get(stringID);
+            if(init){
+                stringGraph = new FactorGraph();
+            }else{
+                stringGraph = m_trainGraphSet.get(stringID);
+                stringGraph.clear();    //is it safe?
             }
-
             factorIndex.clear();
             factorList.clear();
-            for(index=0; index<tmpThread.factorList.size(); index++)
-            {
-                if ( m_mask != null && m_mask.containsKey(tmpThread.featureType.get(index))
-                        && m_mask.get(tmpThread.featureType.get(index)).booleanValue() == false )
+
+            for(index=0; index<tmpString.factorList.size(); index++){
+                if ( m_mask != null && m_mask.containsKey(tmpString.featureType.get(index))
+                        && !m_mask.get(tmpString.featureType.get(index)) ){
                     continue;
-
-                factor = tmpThread.factorList.get(index);
+                }
+                factor = tmpString.factorList.get(index);
                 Factor copy = factor.duplicate();
-                feaID = m_featureMap.get( tmpThread.featureType.get(index) ).intValue();
-
-                copy.exponentiate( m_weights[feaID] );//potential = feature * weight
-                clique = copy.varSet();//to deal with factors defined over the same clique
-                if( factorIndex.containsKey(clique) )
-                {
-                    feaID = factorIndex.get(clique).intValue();
+                feaID = m_featureMap.get(tmpString.featureType.get(index)); // feature ID corresponding to its weight
+                copy.exponentiate( m_weights[feaID] );  // potential = feature * weight
+                clique = copy.varSet(); // to deal with factors defined over the same clique
+                if( factorIndex.containsKey(clique) ){
+                    feaID = factorIndex.get(clique);
                     factor = factorList.get(feaID);
                     factor.multiplyBy(copy);
-                }
-                else
-                {
-                    factorIndex.put(clique, new Integer(factorList.size()));
+                } else {
+                    factorIndex.put(clique, factorList.size());
                     factorList.add(copy);
                 }
             }
 
             //construct the graph
             for(index=0; index<factorList.size(); index++)
-                threadGraph.addFactor(factorList.get(index));
+                stringGraph.addFactor(factorList.get(index));
+            if (init) {
+                m_trainGraphSet.add(stringGraph);
+            }
 
-            if ( init )
-                m_trainGraphSet.add(threadGraph);
         }
-
-        if ( init )
+        if (init) {
             System.out.println("Finish building " + m_trainGraphSet.size() + "factor graphs...");
-    }
-
-    public void outPrediction(String filename, int[] prediction)
-    {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filename)));//append mode
-            for(int i=0; i<prediction.length; i++){
-                writer.write(i + "\t" + prediction[i] + "\n");
-            }
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public double doTesting(String resultpath){
-        FactorGraph graph = null;
-        Assignment assin = null, guess = null;
-        AssignmentIterator it;
-        Factor ptl;
-        Variable variable;
-        int varSize, var, parID = 0;
-        int[] prediction;
-        double max, correct = 0, total = 0, TP = 0, LL = 0;
-        Vector<Double> acc = new Vector<Double>();
-        String filename;
-
-        if( m_trainGraphSet == null )
-            initialization(false);//solely for testing purpose
-
-        Inferencer map_infer = TRP.createForMaxProduct();
-        //Inferencer map_infer = LoopyBP.createForMaxProduct();
-        for(int sampleID=0; sampleID<m_trainSampleSet.size(); sampleID++)
-        {
-            if ( m_foldAssign != null && m_foldAssign[sampleID] != m_foldID )
-                continue;
-
-            graph = m_trainGraphSet.get(sampleID);
-            assin = m_trainAssignment.get(sampleID);
-            if ( (varSize = graph.numVariables()) < 2 )
-                continue;
-
-            correct = 0;
-            prediction = new int[varSize];
-            map_infer.computeMarginals(graph);//begin to collect the expectations
-            for(var=1; var<varSize; var++)
-            {
-                //retrieve the MAP configuration
-                variable = graph.get(var);
-                ptl = map_infer.lookupMarginal( variable );
-                max = -Double.MAX_VALUE;
-                for (it = ptl.assignmentIterator (); it.hasNext (); it.next())
-                {
-                    if (ptl.value(it)>max)
-                    {
-                        max = ptl.value(it);
-                        parID = it.indexOfCurrentAssn ();
-                    }
-                }
-
-                prediction[var] = parID;
-                //evaluate the performance
-                if( parID == assin.get(variable) )
-                    correct++;
-            }
-
-            guess = new Assignment(graph, prediction);
-            if ( map_infer.lookupLogJoint(guess) > map_infer.lookupLogJoint(assin) )
-                LL++;
-
-            prediction[0] = -1;
-            if (resultpath!=null){
-                filename = m_trainSampleSet.get(sampleID).threadid.get(0);
-                outPrediction(resultpath + filename + ".res", prediction);
-            }
-
-            acc.add(correct/(varSize-1));
-            TP += correct;
-            total += varSize-1;
         }
 
-        correct = 0;
-        for(parID=0; parID<acc.size(); parID++)
-            correct += acc.get(parID).doubleValue();
-        System.out.println("Micro accuracy " + TP/total);
-        System.out.println("Macro accuracy " + correct/acc.size());
-        System.out.println(LL/acc.size() + " percentage threads have better configuration in likelihood!");
-        return TP/total;
     }
 
-    public double doTraining(int maxIter)
-    {
+    public double doTraining(int maxIter) {
         initialization(true);//build the initial factor graphs and collect the constraints from data
         double oldLikelihood = getValue(), likelihood; // initial likelihood
-        try
-        {
+        try {
             if ( m_maxer.maximize(this, maxIter) == false )
             {//if failed, try it again
                 System.err.println("Optimizer fails to converge!");
@@ -551,36 +359,5 @@ public class GraphLearner implements Maximizable.ByGradient{
         return likelihood;
     }
 
-    public Vector<Double> getMeanDev(Vector<Double> stat)
-    {
-        Vector<Double> result = new Vector<Double>();
-        double mean = 0, dev = 0;
-        for(Double value : stat)
-            mean += value.doubleValue();
-        mean /= stat.size();
-        result.add(mean);
 
-        for(Double value : stat)
-            dev += (value.doubleValue() - mean) * (value.doubleValue() - mean);
-        dev = Math.sqrt(dev/stat.size());
-        result.add(dev);
-        return result;
-    }
-
-    public void CrossValidation(int fold)
-    {
-        allocateFoldAssignment(fold);
-        Vector<Double> likelihood_list = new Vector<Double>(), acc_list = new Vector<Double>();
-
-        for(m_foldID=0; m_foldID<fold; m_foldID++)
-        {
-            likelihood_list.add( doTraining(10) );
-            acc_list.add( doTesting(null) );
-        }
-
-        Vector<Double> likelihood_result = getMeanDev(likelihood_list), acc_result = getMeanDev(acc_list);
-        System.out.println("Performance of " + fold + " fold cross-validation: \n"
-                + "log-likelihood " + likelihood_result.get(0) + "+/-" + likelihood_result.get(1)
-                + "\naccuracy " + acc_result.get(0) + "+/-" + acc_result.get(1));
-    }
 }

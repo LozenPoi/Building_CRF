@@ -93,7 +93,7 @@ public class Trainer {
             }
 
             // Add the list of table factors into the sample object.
-            String4Learning str = new String4Learning(factorList, featureType);
+            String4Learning str = new String4Learning(factorList, featureType, label_vec.get(idx_sample));
             str_list.add(str);
         }
 

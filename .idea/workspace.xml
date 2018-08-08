@@ -15,7 +15,7 @@
       <file leaf-file-name="FeatureGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FeatureGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-304">
               <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
               <folding />
             </state>
@@ -25,18 +25,22 @@
       <file leaf-file-name="String4Learning.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/String4Learning.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="9" column="59" lean-forward="false" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#463#464#0" expanded="true" />
-                <element signature="e#496#497#0" expanded="true" />
-                <element signature="e#553#554#0" expanded="true" />
-                <element signature="e#597#598#0" expanded="true" />
-                <element signature="e#641#642#0" expanded="true" />
-                <element signature="e#675#676#0" expanded="true" />
-                <element signature="e#735#736#0" expanded="true" />
-                <element signature="e#781#782#0" expanded="true" />
+                <element signature="e#613#614#0" expanded="true" />
+                <element signature="e#646#647#0" expanded="true" />
+                <element signature="e#703#704#0" expanded="true" />
+                <element signature="e#747#748#0" expanded="true" />
+                <element signature="e#791#792#0" expanded="true" />
+                <element signature="e#825#826#0" expanded="true" />
+                <element signature="e#885#886#0" expanded="true" />
+                <element signature="e#931#932#0" expanded="true" />
+                <element signature="e#972#973#0" expanded="true" />
+                <element signature="e#1004#1005#0" expanded="true" />
+                <element signature="e#1059#1060#0" expanded="true" />
+                <element signature="e#1101#1102#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -45,8 +49,8 @@
       <file leaf-file-name="Trainer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Trainer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1096">
-              <caret line="94" column="68" lean-forward="false" selection-start-line="94" selection-start-column="68" selection-end-line="94" selection-end-column="68" />
+            <state relative-caret-position="1076">
+              <caret line="99" column="24" lean-forward="true" selection-start-line="99" selection-start-column="24" selection-end-line="99" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,10 +61,31 @@
       <file leaf-file-name="GraphLearner.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GraphLearner.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="244" column="20" lean-forward="false" selection-start-line="244" selection-start-column="20" selection-end-line="244" selection-end-column="20" />
+            <state relative-caret-position="296">
+              <caret line="330" column="12" lean-forward="false" selection-start-line="330" selection-start-column="12" selection-end-line="330" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3157#3158#0" expanded="true" />
+                <element signature="e#3196#3197#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GraphLearner_old.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GraphLearner_old.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="616">
+              <caret line="536" column="5" lean-forward="true" selection-start-line="502" selection-start-column="4" selection-end-line="536" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3824#3841#0" expanded="true" />
+                <element signature="e#12784#12801#0" expanded="true" />
+                <element signature="e#12851#12859#0" expanded="true" />
+                <element signature="e#15581#15589#0" expanded="true" />
+                <element signature="e#19365#19373#0" expanded="true" />
+                <element signature="e#19888#19896#0" expanded="true" />
+                <element signature="e#19921#19929#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,7 +94,7 @@
       <file leaf-file-name="Tester.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="240">
               <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
@@ -146,6 +171,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -168,9 +196,6 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -313,13 +338,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/FeatureGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/Utils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3287">
@@ -339,7 +357,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CRFLearner.java" />
-    <entry file="file://$PROJECT_DIR$/src/GraphLearner.java">
+    <entry file="file://$PROJECT_DIR$/src/GraphLearner_old.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5909">
           <caret line="313" column="0" lean-forward="true" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
@@ -368,7 +386,7 @@
     <entry file="file://$PROJECT_DIR$/src/CRFLearner.java" />
     <entry file="file://$PROJECT_DIR$/src/utils/Trainer.java" />
     <entry file="file://$PROJECT_DIR$/src/utils/FeatureGenerator.java" />
-    <entry file="file://$PROJECT_DIR$/src/GraphLearner.java" />
+    <entry file="file://$PROJECT_DIR$/src/GraphLearner_old.java" />
     <entry file="file://$PROJECT_DIR$/src/ALogisticRegression.java" />
     <entry file="file://$PROJECT_DIR$/src/CRFLearner.java" />
     <entry file="file://$PROJECT_DIR$/src/utils/Utils.java">
@@ -439,15 +457,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Tester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="240">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/GraphLearner_old.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="536" column="5" lean-forward="true" selection-start-line="502" selection-start-column="4" selection-end-line="536" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3824#3841#0" expanded="true" />
+            <element signature="e#12784#12801#0" expanded="true" />
+            <element signature="e#12851#12859#0" expanded="true" />
+            <element signature="e#15581#15589#0" expanded="true" />
+            <element signature="e#19365#19373#0" expanded="true" />
+            <element signature="e#19888#19896#0" expanded="true" />
+            <element signature="e#19921#19929#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/FeatureGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
+        <state relative-caret-position="-304">
           <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
           <folding />
         </state>
@@ -455,26 +490,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/String4Learning.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="180">
+          <caret line="9" column="59" lean-forward="false" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#463#464#0" expanded="true" />
-            <element signature="e#496#497#0" expanded="true" />
-            <element signature="e#553#554#0" expanded="true" />
-            <element signature="e#597#598#0" expanded="true" />
-            <element signature="e#641#642#0" expanded="true" />
-            <element signature="e#675#676#0" expanded="true" />
-            <element signature="e#735#736#0" expanded="true" />
-            <element signature="e#781#782#0" expanded="true" />
+            <element signature="e#613#614#0" expanded="true" />
+            <element signature="e#646#647#0" expanded="true" />
+            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#747#748#0" expanded="true" />
+            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#825#826#0" expanded="true" />
+            <element signature="e#885#886#0" expanded="true" />
+            <element signature="e#931#932#0" expanded="true" />
+            <element signature="e#972#973#0" expanded="true" />
+            <element signature="e#1004#1005#0" expanded="true" />
+            <element signature="e#1059#1060#0" expanded="true" />
+            <element signature="e#1101#1102#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Trainer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1096">
-          <caret line="94" column="68" lean-forward="false" selection-start-line="94" selection-start-column="68" selection-end-line="94" selection-end-column="68" />
+        <state relative-caret-position="1076">
+          <caret line="99" column="24" lean-forward="true" selection-start-line="99" selection-start-column="24" selection-end-line="99" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -483,10 +522,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GraphLearner.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="244" column="20" lean-forward="false" selection-start-line="244" selection-start-column="20" selection-end-line="244" selection-end-column="20" />
+        <state relative-caret-position="296">
+          <caret line="330" column="12" lean-forward="false" selection-start-line="330" selection-start-column="12" selection-end-line="330" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3157#3158#0" expanded="true" />
+            <element signature="e#3196#3197#0" expanded="true" />
           </folding>
         </state>
       </provider>
