@@ -104,7 +104,7 @@ public class Trainer {
         return str_list;
     }
 
-    // Read a file of ground-truth labels and convert them to vectors.
+    // Read a file of ground-truth labels and convert them to vectors (this updates the label dictionary).
     public ArrayList<ArrayList<Integer>> label_to_vector(String filepath){
         ArrayList<ArrayList<Integer>> label_vector = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
@@ -127,27 +127,27 @@ public class Trainer {
         return label_vector;
     }
 
-    // Read a file of string sequences (tokens) and convert them to vectors.
-    public ArrayList<ArrayList<Integer>> token_to_vector(String filepath){
-        ArrayList<ArrayList<Integer>> token_vector = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
-            String line;
-            String[] tokens;
-            ArrayList<Integer> token_vector_tmp;
-            int token_tmp;
-            while ((line = br.readLine()) != null) {
-                tokens = line.split(",");
-                token_vector_tmp = new ArrayList<>();
-                for(String s: tokens){
-                    token_tmp = featureGen.currentToken(s);
-                    token_vector_tmp.add(token_tmp);
-                }
-                token_vector.add(token_vector_tmp);
-            }
-        } catch (Exception e){
-            System.out.println("File doesn't exist.");
-        }
-        return token_vector;
-    }
+//    // Read a file of string sequences (tokens) and convert them to vectors.
+//    public ArrayList<ArrayList<Integer>> token_to_vector(String filepath){
+//        ArrayList<ArrayList<Integer>> token_vector = new ArrayList<>();
+//        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+//            String line;
+//            String[] tokens;
+//            ArrayList<Integer> token_vector_tmp;
+//            int token_tmp;
+//            while ((line = br.readLine()) != null) {
+//                tokens = line.split(",");
+//                token_vector_tmp = new ArrayList<>();
+//                for(String s: tokens){
+//                    token_tmp = featureGen.currentToken(s);
+//                    token_vector_tmp.add(token_tmp);
+//                }
+//                token_vector.add(token_vector_tmp);
+//            }
+//        } catch (Exception e){
+//            System.out.println("File doesn't exist.");
+//        }
+//        return token_vector;
+//    }
 
 }
