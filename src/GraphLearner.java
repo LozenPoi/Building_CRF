@@ -6,10 +6,7 @@ import edu.umass.cs.mallet.grmm.inference.LoopyBP;
 import edu.umass.cs.mallet.grmm.inference.TRP;
 import edu.umass.cs.mallet.grmm.types.*;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class GraphLearner implements Maximizable.ByGradient{
@@ -124,15 +121,15 @@ public class GraphLearner implements Maximizable.ByGradient{
         if( params.length != m_weights.length ){
             m_weights = new double[params.length];
         }
-        Map<Integer, Double> weights = getWeights();
-        try {
-            for(Integer fea : weights.keySet())
-                m_writer.write(fea.toString() + " : " + weights.get(fea).toString() + " ");
-            m_writer.write("\t" + m_oldLikelihood + "\n");
-            m_writer.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Map<Integer, Double> weights = getWeights();
+//        try {
+//            for(Integer fea : weights.keySet())
+//                m_writer.write(fea.toString() + " : " + weights.get(fea).toString() + " ");
+//            m_writer.write("\t" + m_oldLikelihood + "\n");
+//            m_writer.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         System.arraycopy(params, 0, m_weights, 0, m_weights.length);
         m_updated = true;
     }
@@ -245,6 +242,8 @@ public class GraphLearner implements Maximizable.ByGradient{
             assignment = new int[sample.labelList.size()];
             for(int i=0; i<sample.labelList.size(); i++)
                 assignment[i] = sample.labelList.get(i);
+            //System.out.println(graph.numVariables());
+            //for(int i=0;i<assignment.length;i++)System.out.println(assignment[i]);
             assign = new Assignment(graph, assignment);
             m_trainAssignment.add(assign);
 
@@ -354,6 +353,40 @@ public class GraphLearner implements Maximizable.ByGradient{
 //            e.printStackTrace();
 //        }
         return likelihood;
+    }
+
+    public void LoadWeights(String filename){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
+            String tmpTxt;
+            String[] feature;
+            int feaPtx;
+            Integer fea;
+            while( (tmpTxt=reader.readLine()) != null ){
+                feature = tmpTxt.split(" : ");
+                fea = new Integer(feature[0]);
+                if( m_featureMap.containsKey(fea) )
+                {
+                    feaPtx = m_featureMap.get(fea).intValue();
+                    m_weights[feaPtx] = Double.valueOf(feature[1]);
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void SaveWeights(String filename){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(new File(filename)));//append mode
+            Map<Integer, Double> weights = getWeights();
+            for(Integer fea : weights.keySet())
+                writer.write(fea.toString() + " : " + weights.get(fea).toString() + "\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

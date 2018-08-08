@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class Tester {
+public class Main {
 
 //    public double doTesting(ArrayList<FactorGraph> testGraphSet, ArrayList<Assignment>testAssignment){
 //        FactorGraph graph;
@@ -72,7 +72,7 @@ public class Tester {
 //        return TP/total;
 //    }
 
-    public void main(){
+    public static void main(String args[]){
 
         Trainer m_trainer;
         GraphLearner m_graphLearner;
@@ -85,7 +85,7 @@ public class Tester {
         ArrayList<String4Learning> training_data = new ArrayList<>();
 
         // Read training strings.
-        try (BufferedReader br = new BufferedReader(new FileReader("train_string.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data/train_string.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 training_string.add(line);
@@ -96,10 +96,10 @@ public class Tester {
 
         // Read training labels through the trainer.
         m_trainer = new Trainer();
-        training_label = m_trainer.label_to_vector("train_label.txt");
+        training_label = m_trainer.label_to_vector("data/train_label.txt");
 
         // Read testing strings.
-        try (BufferedReader br = new BufferedReader(new FileReader("test_string.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data/test_string.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 testing_string.add(line);
@@ -109,7 +109,7 @@ public class Tester {
         }
 
         // Read testing labels.
-        try (BufferedReader br = new BufferedReader(new FileReader("test_label.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("data/test_label.txt"))) {
             String line;
             String[] labels;
             ArrayList<String> label_seq;
@@ -130,7 +130,8 @@ public class Tester {
 
         // Build up a graph learner.
         m_graphLearner = new GraphLearner(training_data);
-        m_graphLearner.doTraining(50);
+        m_graphLearner.doTraining(10);
+        for(int i=0; i<10; i++)System.out.println(m_graphLearner.getParameter(i));
 
     }
 

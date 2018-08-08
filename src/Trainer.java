@@ -1,5 +1,6 @@
 import edu.umass.cs.mallet.grmm.types.Factor;
 import edu.umass.cs.mallet.grmm.types.LogTableFactor;
+import edu.umass.cs.mallet.grmm.types.TableFactor;
 import edu.umass.cs.mallet.grmm.types.Variable;
 
 import java.io.BufferedReader;
@@ -75,7 +76,8 @@ public class Trainer {
                 feature_vector = list_node_feature.get(i);
                 for(int j=0; j<len_string.get(idx_sample); j++){
                     Arrays.fill(feature_value_arr, feature_vector.get(j));
-                    ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[j]}, feature_value_arr);
+                    //ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[j]}, feature_value_arr);
+                    ptl = LogTableFactor.makeFromValues(allVars[j], feature_value_arr);
                     factorList.add(ptl);
                     featureType.add(i);
                 }
