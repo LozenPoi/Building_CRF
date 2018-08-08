@@ -214,7 +214,7 @@ public class GraphLearner implements Maximizable.ByGradient{
 
     void initWeight(){
         for(int i=0; i<m_weights.length; i++)
-            m_weights[i] = 1.0; //rand.nextDouble();
+            m_weights[i] = m_rand.nextDouble();
     }
 
     void initialization(boolean initWeight){
