@@ -159,10 +159,12 @@ public class GraphLearner implements Maximizable.ByGradient{
             graph = m_trainGraphSet.get(stringID);
             m_infer.computeMarginals(graph);
             tmp = m_infer.lookupLogJoint(assign);
-            if( Double.isNaN(tmp) || tmp>0 )
+            if( Double.isNaN(tmp) || tmp>0 ) {
                 System.err.println("likelihood failed with " + tmp + "!");
-            else
-                m_oldLikelihood += tmp*scale;
+                //System.out.println("Assignment: " + assign);
+            }else {
+                m_oldLikelihood += tmp * scale;
+            }
         }
 
         System.out.println("[Info]Log-likelihood " + m_oldLikelihood);
@@ -272,11 +274,12 @@ public class GraphLearner implements Maximizable.ByGradient{
         HashMap<VarSet, Integer> factorIndex = new HashMap<>();
         Vector<Factor> factorList = new Vector<>();
 
-        // Convert and cache the factors in each strings into a factor graph.
+        // Convert and cache the factors in each string into a factor graph.
         boolean init = (m_trainGraphSet == null);
         // Initialize for the first time.
         if(init){
-            m_trainGraphSet = new ArrayList<>(m_trainSampleSet.size());
+            //m_trainGraphSet = new ArrayList<>(m_trainSampleSet.size());
+            m_trainGraphSet = new ArrayList<>();
         }
 
         for(stringID=0; stringID<m_trainSampleSet.size(); stringID++){

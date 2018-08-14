@@ -68,10 +68,10 @@ public class Trainer {
             }
 
             // Add node features.
+            Factor ptl;
             list_node_feature = featureGen.getNodeFeature(sample_string.get(idx_sample));
             ArrayList<Double> feature_vector;
             double[] feature_value_arr = new double[num_label];
-            Factor ptl;
             for(int i=0; i<num_node_feature_type; i++){
                 feature_vector = list_node_feature.get(i);
                 for(int j=0; j<len_string.get(idx_sample); j++){
