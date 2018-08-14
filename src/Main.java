@@ -97,6 +97,7 @@ public class Main {
         // Read training labels through the trainer.
         m_trainer = new Trainer();
         training_label = m_trainer.label_to_vector("data/train_label.txt");
+        //System.out.println(training_label.get(0));
 
         // Read testing strings.
         try (BufferedReader br = new BufferedReader(new FileReader("data/test_string.txt"))) {
