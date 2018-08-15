@@ -91,7 +91,7 @@ public class GraphLearner implements Maximizable.ByGradient{
 
     @Override
     public double getParameter(int index){
-        if ( index<m_weights.length)
+        if (index<m_weights.length)
             return m_weights[index];
         else
             return 0;
