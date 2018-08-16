@@ -89,6 +89,7 @@ public class Trainer {
             for(int i=0; i<num_label; i++){
                 for(int j=0; j<num_label; j++){
                     trans_feature_arr = featureGen.label_transition(i,j);
+                    System.out.println(trans_feature_arr.toString());
                     for(int k=0; k<len_string.get(idx_sample)-1; k++){
                         ptl = LogTableFactor.makeFromValues(
                                 new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
