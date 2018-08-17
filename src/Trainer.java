@@ -1,14 +1,10 @@
-import edu.umass.cs.mallet.grmm.types.Factor;
-import edu.umass.cs.mallet.grmm.types.LogTableFactor;
-import edu.umass.cs.mallet.grmm.types.TableFactor;
-import edu.umass.cs.mallet.grmm.types.Variable;
+import edu.umass.cs.mallet.grmm.types.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  *  This is a class putting node and edge features into table factors. The feature definition is specified in the class
@@ -68,7 +64,6 @@ public class Trainer {
             }
 
             // Add node features.
-            Factor ptl;
             list_node_feature = featureGen.getNodeFeature(sample_string.get(idx_sample));
             ArrayList<Double> feature_vector;
             double[] feature_value_arr = new double[num_label];
@@ -76,25 +71,27 @@ public class Trainer {
                 feature_vector = list_node_feature.get(i);
                 for(int j=0; j<len_string.get(idx_sample); j++){
                     Arrays.fill(feature_value_arr, feature_vector.get(j));
-                    //ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[j]}, feature_value_arr);
-                    ptl = LogTableFactor.makeFromValues(allVars[j], feature_value_arr);
+                    Factor ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[j]}, feature_value_arr);
+//                    VarSet varSet = new HashVarSet(new Variable[] { allVars[j] });
+//                    Factor ptl = LogTableFactor.makeFromValues(varSet, feature_value_arr);
                     factorList.add(ptl);
                     featureType.add(i);
                 }
             }
 
             // Add all first-order transition features f(y_(i-1),y_i).
-            int current_size = featureType.size();
             double[] trans_feature_arr;
             for(int i=0; i<num_label; i++){
                 for(int j=0; j<num_label; j++){
                     trans_feature_arr = featureGen.label_transition(i,j);
-                    System.out.println(trans_feature_arr.toString());
+                    //System.out.println(trans_feature_arr.toString());
                     for(int k=0; k<len_string.get(idx_sample)-1; k++){
-                        ptl = LogTableFactor.makeFromValues(
+                        Factor ptl = LogTableFactor.makeFromValues(
                                 new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
+//                        Factor ptl = new TableFactor(
+//                                new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
                         factorList.add(ptl);
-                        featureType.add(current_size+i*num_label+j);
+                        featureType.add(num_node_feature_type+i*num_label+j);
                     }
                 }
             }
