@@ -71,6 +71,7 @@ public class GraphLearner implements Maximizable.ByGradient{
             }
         }
         //System.out.println(m_featureMap.size());
+        //System.out.println(Math.sqrt(m_featureMap.size()-2));
         return m_featureMap.size();
     }
 

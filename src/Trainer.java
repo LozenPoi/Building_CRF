@@ -71,7 +71,7 @@ public class Trainer {
                 feature_vector = list_node_feature.get(i);
                 for(int j=0; j<len_string.get(idx_sample); j++){
                     Arrays.fill(feature_value_arr, feature_vector.get(j));
-                    Factor ptl = LogTableFactor.makeFromValues(new Variable[] {allVars[j]}, feature_value_arr);
+                    Factor ptl = LogTableFactor.makeFromLogValues(new Variable[] {allVars[j]}, feature_value_arr);
 //                    VarSet varSet = new HashVarSet(new Variable[] { allVars[j] });
 //                    Factor ptl = LogTableFactor.makeFromValues(varSet, feature_value_arr);
                     factorList.add(ptl);
@@ -86,10 +86,10 @@ public class Trainer {
                     trans_feature_arr = featureGen.label_transition(i,j);
                     //System.out.println(trans_feature_arr.toString());
                     for(int k=0; k<len_string.get(idx_sample)-1; k++){
-                        Factor ptl = LogTableFactor.makeFromValues(
-                                new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
-//                        Factor ptl = new TableFactor(
+//                        Factor ptl = LogTableFactor.makeFromLogValues(
 //                                new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
+                        Factor ptl = new TableFactor(
+                                new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
                         factorList.add(ptl);
                         featureType.add(num_node_feature_type+i*num_label+j);
                     }
