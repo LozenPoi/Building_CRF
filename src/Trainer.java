@@ -36,6 +36,8 @@ public class Trainer {
         int num_edge_feature_type;  // number of edge feature types
         ArrayList<Integer> len_string = new ArrayList<>(); // length of each string
 
+        String4Learning str;
+
         // Get the size of label dictionary.
         num_label = featureGen.dict_label.size();
 
@@ -86,10 +88,10 @@ public class Trainer {
                     trans_feature_arr = featureGen.label_transition(i,j);
                     //System.out.println(trans_feature_arr.toString());
                     for(int k=0; k<len_string.get(idx_sample)-1; k++){
-//                        Factor ptl = LogTableFactor.makeFromLogValues(
-//                                new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
-                        Factor ptl = new TableFactor(
+                        Factor ptl = LogTableFactor.makeFromLogValues(
                                 new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
+//                        Factor ptl = new TableFactor(
+//                                new Variable[] {allVars[k], allVars[k+1]}, trans_feature_arr);
                         factorList.add(ptl);
                         featureType.add(num_node_feature_type+i*num_label+j);
                     }
@@ -97,7 +99,11 @@ public class Trainer {
             }
 
             // Add the list of table factors into the sample object.
-            String4Learning str = new String4Learning(factorList, featureType, label_vec.get(idx_sample));
+            if(label_vec != null) {
+                str = new String4Learning(factorList, featureType, label_vec.get(idx_sample));
+            }else{
+                str = new String4Learning(factorList, featureType);
+            }
             str_list.add(str);
         }
 

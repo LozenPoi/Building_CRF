@@ -18,7 +18,7 @@ public class GraphLearner implements Maximizable.ByGradient{
 
     Maximizer.ByGradient m_maxer = new LimitedMemoryBFGS();//gradient based optimizer
 
-    ArrayList<String4Learning> m_trainSampleSet = null; // training sample (factor, feaType, Y)
+    ArrayList<String4Learning> m_trainSampleSet = null; // training sample (table factors, feaType, labels)
     ArrayList<FactorGraph> m_trainGraphSet = null;
     ArrayList<Assignment> m_trainAssignment = null;
 
@@ -392,6 +392,88 @@ public class GraphLearner implements Maximizable.ByGradient{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<ArrayList<Integer>> doTesting(ArrayList<FactorGraph> testGraphSet){
+
+        FactorGraph graph;
+        AssignmentIterator it;
+        Factor ptl;
+        Variable variable;
+        int varSize, var, labelID = 0;
+        double max;
+        ArrayList<ArrayList<Integer>> prediction = new ArrayList<>(testGraphSet.size());
+        ArrayList<Integer> pred_tmp = new ArrayList<>();
+
+        Inferencer map_infer = TRP.createForMaxProduct();
+        //Inferencer map_infer = LoopyBP.createForMaxProduct();
+        for(int sampleID=0; sampleID<testGraphSet.size(); sampleID++) {
+            graph = testGraphSet.get(sampleID);
+            varSize = graph.numVariables();
+            map_infer.computeMarginals(graph);  //begin to collect the expectations
+            for(var=0; var<varSize; var++) {
+                //retrieve the MAP configuration
+                variable = graph.get(var);
+                ptl = map_infer.lookupMarginal(variable);
+                max = -Double.MAX_VALUE;
+                for (it = ptl.assignmentIterator(); it.hasNext (); it.next()) {
+                    if (ptl.value(it)>max) {
+                        max = ptl.value(it);
+                        labelID = it.indexOfCurrentAssn();
+                    }
+                }
+                pred_tmp.add(labelID);
+            }
+            prediction.add(pred_tmp);
+        }
+        return prediction;
+
+    }
+
+    // Build a set of factor graphs for the test set.
+    public ArrayList<FactorGraph> buildFactorGraphs_test(ArrayList<String4Learning> testSampleSet){
+
+        FactorGraph stringGraph;
+        String4Learning tmpString;
+        Factor factor;
+        VarSet clique;
+        int index, feaID, stringID;
+        HashMap<VarSet, Integer> factorIndex = new HashMap<>();
+        Vector<Factor> factorList = new Vector<>();
+        ArrayList<FactorGraph> testGraphSet = new ArrayList<>();
+
+        for(stringID=0; stringID<testSampleSet.size(); stringID++){
+
+            tmpString = testSampleSet.get(stringID);
+            stringGraph = new FactorGraph();
+            factorIndex.clear();
+            factorList.clear();
+
+            for(index=0; index<tmpString.factorList.size(); index++){
+                factor = tmpString.factorList.get(index);
+                Factor copy = factor.duplicate();
+                feaID = m_featureMap.get(tmpString.featureType.get(index)); // feature ID corresponding to its weight
+                copy.exponentiate( m_weights[feaID] );  // potential = feature * weight
+                clique = copy.varSet(); // to deal with factors defined over the same clique
+                if( factorIndex.containsKey(clique) ){
+                    feaID = factorIndex.get(clique);
+                    factor = factorList.get(feaID);
+                    factor.multiplyBy(copy);
+                } else {
+                    factorIndex.put(clique, factorList.size());
+                    factorList.add(copy);
+                }
+            }
+
+            //construct the graph
+            for(index=0; index<factorList.size(); index++)
+                stringGraph.addFactor(factorList.get(index));
+            testGraphSet.add(stringGraph);
+
+        }
+        System.out.println("Finish building " + testGraphSet.size() + "factor graphs...");
+        return testGraphSet;
+
     }
 
 }

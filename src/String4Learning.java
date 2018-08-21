@@ -15,6 +15,11 @@ public class String4Learning {
         this.labelList = labelList;
     }
 
+    public String4Learning(List<Factor> factorList, List<Integer> featureType) {
+        this.factorList = factorList;
+        this.featureType = featureType;
+    }
+
     public List<Factor> getFactorList() {
         return factorList;
     }
