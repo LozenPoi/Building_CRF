@@ -74,14 +74,14 @@ public class Main {
 
         // Build up a graph learner and train it using training data.
         m_graphLearner = new GraphLearner(training_data);
-        m_graphLearner.doTraining(1);
+        m_graphLearner.doTraining(10);
         for(int i=0; i<10; i++)System.out.println(m_graphLearner.getParameter(i));  // Print some weights.
 
         // Apply the trained model to the test set.
         testing_data = m_trainer.string4Learning(testing_string,null);
         testGraphSet = m_graphLearner.buildFactorGraphs_test(testing_data);
         testPrediction = m_graphLearner.doTesting(testGraphSet);
-        for(int i=0; i<14; i++)System.out.println(testPrediction.get(0).get(i));
+        for(int i=0; i<14; i++)System.out.println(m_trainer.featureGen.dict_label.get(testPrediction.get(0).get(i)));
 
     }
 

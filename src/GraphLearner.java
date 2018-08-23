@@ -2,6 +2,7 @@ import edu.umass.cs.mallet.base.maximize.LimitedMemoryBFGS;
 import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.maximize.Maximizer;
 import edu.umass.cs.mallet.grmm.inference.Inferencer;
+import edu.umass.cs.mallet.grmm.inference.JunctionTreeInferencer;
 import edu.umass.cs.mallet.grmm.inference.LoopyBP;
 import edu.umass.cs.mallet.grmm.inference.TRP;
 import edu.umass.cs.mallet.grmm.types.*;
@@ -37,6 +38,7 @@ public class GraphLearner implements Maximizable.ByGradient{
 
     GraphLearner(ArrayList<String4Learning> traininglist){
         m_infer = new LoopyBP(50);
+        //m_infer = new JunctionTreeInferencer();
 
         int featureDim = setTrainingSet(traininglist);
         m_weights = new double[featureDim];
@@ -218,7 +220,7 @@ public class GraphLearner implements Maximizable.ByGradient{
 
     void initWeight(){
         for(int i=0; i<m_weights.length; i++)
-            m_weights[i] = m_rand.nextDouble();
+            m_weights[i] = 1;//m_rand.nextDouble();
     }
 
     void initialization(boolean initWeight){
@@ -403,26 +405,29 @@ public class GraphLearner implements Maximizable.ByGradient{
         int varSize, var, labelID = 0;
         double max;
         ArrayList<ArrayList<Integer>> prediction = new ArrayList<>(testGraphSet.size());
-        ArrayList<Integer> pred_tmp = new ArrayList<>();
+        ArrayList<Integer> pred_tmp;
 
-        Inferencer map_infer = TRP.createForMaxProduct();
+        //Inferencer map_infer = TRP.createForMaxProduct();
         //Inferencer map_infer = LoopyBP.createForMaxProduct();
         for(int sampleID=0; sampleID<testGraphSet.size(); sampleID++) {
             graph = testGraphSet.get(sampleID);
             varSize = graph.numVariables();
-            map_infer.computeMarginals(graph);  //begin to collect the expectations
+            m_infer.computeMarginals(graph);  //begin to collect the expectations
+            pred_tmp = new ArrayList<>();
             for(var=0; var<varSize; var++) {
                 //retrieve the MAP configuration
                 variable = graph.get(var);
-                ptl = map_infer.lookupMarginal(variable);
+                ptl = m_infer.lookupMarginal(variable);
                 max = -Double.MAX_VALUE;
-                for (it = ptl.assignmentIterator(); it.hasNext (); it.next()) {
+                for (it = ptl.assignmentIterator(); it.hasNext(); it.next()) {
+                    //System.out.println(ptl.value(it));
                     if (ptl.value(it)>max) {
                         max = ptl.value(it);
                         labelID = it.indexOfCurrentAssn();
                     }
                 }
                 pred_tmp.add(labelID);
+                //System.out.println(labelID);
             }
             prediction.add(pred_tmp);
         }
@@ -471,7 +476,7 @@ public class GraphLearner implements Maximizable.ByGradient{
             testGraphSet.add(stringGraph);
 
         }
-        System.out.println("Finish building " + testGraphSet.size() + "factor graphs...");
+        System.out.println("Finish building " + testGraphSet.size() + "testing factor graphs...");
         return testGraphSet;
 
     }
